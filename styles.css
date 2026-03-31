@@ -629,14 +629,14 @@ body::after {
 }
 
 .date-badge strong {
-  font-family: Calibri, "Trebuchet MS", "Segoe UI", sans-serif;
-  font-size: 1rem;
-  line-height: 1.45;
-  font-weight: 700;
-  color: #8e4a56;
-  letter-spacing: 0.01em;
-  font-style: normal;
-  text-wrap: balance;
+    font-family: Calibri;
+    font-size: 14px;
+    line-height: 1.45;
+    font-weight: 900;
+    color: #8e4a56;
+    letter-spacing: 0.01em;
+    font-style: normal;
+    text-wrap: balance;
 }
 
 .date-badge span:first-child,
@@ -649,11 +649,14 @@ body::after {
 .date-badge span:first-child {
   font-size: 0.78rem;
   font-weight: 700;
+  font-family: "Cormorant Garamond", serif;
+  
 }
 
 .date-badge span:last-child {
   font-size: 0.88rem;
-  color: #7f6461;
+  color: #030303;
+  font-family: "Cormorant Garamond", serif;
 }
 
 .story-grid {

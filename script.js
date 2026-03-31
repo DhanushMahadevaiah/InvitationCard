@@ -93,8 +93,13 @@ const beginInvitationExperience = async () => {
     openingScreen?.classList.add("is-hidden");
     invitationCard?.classList.remove("invitation-hidden");
     invitationCard?.classList.add("invitation-visible");
+    revealItems.forEach((item, index) => {
+      window.setTimeout(() => {
+        item.classList.add("is-visible");
+      }, index * 120);
+    });
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, 1100);
+  }, 1500);
 };
 
 const startMusicIfPossible = async () => {
@@ -116,15 +121,14 @@ window.addEventListener(
 
     window.setTimeout(() => {
       beginInvitationExperience();
-    }, 3000);
+    }, 3500);
   },
   { once: true }
 );
 
-const unlockAudioAndOpen = async () => {
+const unlockAudio = async () => {
   await startMusicIfPossible();
-  beginInvitationExperience();
 };
 
-window.addEventListener("pointerdown", unlockAudioAndOpen, { once: true });
-window.addEventListener("touchstart", unlockAudioAndOpen, { once: true });
+window.addEventListener("pointerdown", unlockAudio, { once: true });
+window.addEventListener("touchstart", unlockAudio, { once: true });
