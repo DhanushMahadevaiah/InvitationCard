@@ -53,7 +53,7 @@ window.addEventListener(
   () => {
     window.setTimeout(() => {
       beginInvitationExperience();
-    }, 3500);
+    }, 3000);
   },
   { once: true }
 );
