@@ -1,7 +1,6 @@
 const revealItems = document.querySelectorAll(".reveal");
 const openingScreen = document.querySelector("#opening-screen");
 const invitationCard = document.querySelector("#invitation-card");
-const openInviteButton = document.querySelector("#open-invite-button");
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -26,6 +25,7 @@ let audioContext;
 let ambientGain;
 let ambientTimer;
 let audioStarted = false;
+let invitationStarted = false;
 
 const notes = [523.25, 659.25, 783.99, 659.25];
 
@@ -73,7 +73,8 @@ const playChime = (timeOffset = 0) => {
 
 const startAmbientLoop = async () => {
   const context = await ensureAudioContext();
-  if (!context || ambientTimer) return false;
+  if (!context) return false;
+  if (ambientTimer) return true;
 
   playChime();
   ambientTimer = window.setInterval(() => {
@@ -83,11 +84,10 @@ const startAmbientLoop = async () => {
 };
 
 const beginInvitationExperience = async () => {
-  if (audioStarted) return;
-  audioStarted = true;
+  if (invitationStarted) return;
+  invitationStarted = true;
 
   openingScreen?.classList.add("is-opening");
-  await startAmbientLoop();
 
   window.setTimeout(() => {
     openingScreen?.classList.add("is-hidden");
@@ -97,16 +97,34 @@ const beginInvitationExperience = async () => {
   }, 1100);
 };
 
-openInviteButton?.addEventListener("click", beginInvitationExperience);
+const startMusicIfPossible = async () => {
+  if (audioStarted) return;
+  const started = await startAmbientLoop();
+  if (started) {
+    audioStarted = true;
+  }
+};
 
 window.addEventListener(
   "load",
   async () => {
     try {
-      await startAmbientLoop();
+      await startMusicIfPossible();
     } catch (error) {
       // Autoplay may be blocked until user interaction.
     }
+
+    window.setTimeout(() => {
+      beginInvitationExperience();
+    }, 900);
   },
   { once: true }
 );
+
+const unlockAudioAndOpen = async () => {
+  await startMusicIfPossible();
+  beginInvitationExperience();
+};
+
+window.addEventListener("pointerdown", unlockAudioAndOpen, { once: true });
+window.addEventListener("touchstart", unlockAudioAndOpen, { once: true });

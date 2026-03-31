@@ -75,7 +75,7 @@ body::after {
   z-index: 6;
   display: grid;
   place-items: center;
-  padding: 1.5rem;
+  padding: 0;
   background:
     radial-gradient(circle at top, rgba(255, 255, 255, 0.5), transparent 24%),
     linear-gradient(180deg, rgba(248, 239, 230, 0.96), rgba(234, 214, 196, 0.96));
@@ -91,55 +91,88 @@ body::after {
   visibility: hidden;
 }
 
-.opening-envelope {
+.door-opening-scene {
   position: relative;
-  width: min(100%, 24rem);
-  height: 20rem;
-  perspective: 1200px;
+  width: 100%;
+  height: 100vh;
+  perspective: 1800px;
 }
 
-.envelope-back,
-.envelope-flap,
-.letter-sheet {
+.door-panel,
+.opening-letter {
   position: absolute;
-  inset: 0;
-  border-radius: 1.8rem;
+  top: 0;
+  bottom: 0;
 }
 
-.envelope-back {
+.door-panel {
+  width: 50%;
   background:
-    linear-gradient(135deg, rgba(196, 108, 106, 0.18), rgba(255, 248, 240, 0.96)),
-    rgba(255, 251, 246, 0.98);
-  border: 1px solid rgba(197, 155, 79, 0.28);
-  box-shadow: 0 24px 60px rgba(122, 63, 72, 0.18);
+    linear-gradient(180deg, rgba(255, 249, 241, 0.98), rgba(242, 221, 205, 0.98)),
+    linear-gradient(90deg, rgba(197, 155, 79, 0.08), transparent);
+  border: 1px solid rgba(197, 155, 79, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+  transition: transform 1400ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  overflow: hidden;
 }
 
-.envelope-flap {
-  inset: 0 auto auto 0;
-  height: 56%;
-  transform-origin: top;
-  background:
-    linear-gradient(180deg, rgba(255, 245, 236, 1), rgba(242, 217, 201, 0.94));
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  border-top-left-radius: 1.8rem;
-  border-top-right-radius: 1.8rem;
-  transition: transform 1000ms cubic-bezier(0.2, 0.9, 0.2, 1);
-  box-shadow: inset 0 -10px 18px rgba(183, 110, 121, 0.08);
-}
-
-.letter-sheet {
+.door-panel::before,
+.door-panel::after {
+  content: "";
+  position: absolute;
   inset: 1rem;
+  border: 1px solid rgba(183, 110, 121, 0.12);
+}
+
+.door-panel::after {
+  inset: auto;
+  width: 0.85rem;
+  height: 0.85rem;
+  top: 50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(197, 155, 79, 0.95), rgba(160, 98, 85, 0.9));
+  border: 0;
+  transform: translateY(-50%);
+  box-shadow: 0 0 0 4px rgba(255, 248, 240, 0.65);
+}
+
+.door-left {
+  left: 0;
+  transform-origin: left center;
+}
+
+.door-left::after {
+  right: 1.2rem;
+}
+
+.door-right {
+  right: 0;
+  transform-origin: right center;
+}
+
+.door-right::after {
+  left: 1.2rem;
+}
+
+.opening-letter {
+  left: 50%;
+  top: 50%;
+  width: min(92vw, 32rem);
+  min-height: 18rem;
+  padding: 2.4rem 1.6rem;
+  border-radius: 2rem;
+  background:
+    linear-gradient(180deg, rgba(255, 252, 248, 0.98), rgba(252, 241, 231, 0.98));
+  border: 1px solid rgba(197, 155, 79, 0.28);
   display: grid;
   align-content: center;
   justify-items: center;
   gap: 0.8rem;
-  padding: 2rem 1.4rem 1.5rem;
   text-align: center;
-  background: linear-gradient(180deg, rgba(255, 252, 248, 0.98), rgba(252, 241, 231, 0.98));
-  border: 1px solid rgba(197, 155, 79, 0.2);
+  transform: translate(-50%, -50%) scale(0.92);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
-  transform: translateY(2rem);
-  transition: transform 1100ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  transition: transform 1200ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 1200ms ease;
+  opacity: 0.88;
 }
 
 .opening-kicker {
@@ -151,7 +184,7 @@ body::after {
   text-transform: uppercase;
 }
 
-.letter-sheet h1 {
+.opening-letter h1 {
   margin: 0;
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(2.5rem, 11vw, 3.8rem);
@@ -159,7 +192,7 @@ body::after {
   font-weight: 600;
 }
 
-.letter-sheet h1 span {
+.opening-letter h1 span {
   display: block;
   color: var(--gold);
   font-size: 0.5em;
@@ -171,24 +204,17 @@ body::after {
   line-height: 1.6;
 }
 
-.open-invite-button {
-  appearance: none;
-  border: 1px solid rgba(197, 155, 79, 0.24);
-  border-radius: 999px;
-  padding: 0.95rem 1.5rem;
-  background: linear-gradient(135deg, #c46c6a, #9d4b5d);
-  color: #fffaf7;
-  font: inherit;
-  font-weight: 700;
-  box-shadow: 0 14px 30px rgba(157, 75, 93, 0.24);
+.opening-screen.is-opening .door-left {
+  transform: rotateY(-88deg);
 }
 
-.opening-screen.is-opening .envelope-flap {
-  transform: rotateX(170deg);
+.opening-screen.is-opening .door-right {
+  transform: rotateY(88deg);
 }
 
-.opening-screen.is-opening .letter-sheet {
-  transform: translateY(-2.6rem) scale(1.02);
+.opening-screen.is-opening .opening-letter {
+  transform: translate(-50%, -52%) scale(1.04);
+  opacity: 1;
 }
 
 .background-ornaments {
@@ -603,13 +629,20 @@ body::after {
 }
 
 .date-badge strong {
-  font-family: "Georgia", "Cormorant Garamond", serif;
-  font-size: 1.62rem;
-  line-height: 1.08;
-  font-weight: 700;
+  font-family: "Prata", "Cormorant Garamond", serif;
+  font-size: 1.56rem;
+  line-height: 1.18;
+  font-weight: 400;
   color: #8e4a56;
-  letter-spacing: 0.03em;
-  font-style: italic;
+  letter-spacing: 0.04em;
+  font-style: normal;
+  text-wrap: balance;
+}
+
+.date-badge span:first-child,
+.date-badge span:last-child {
+  font-family: "Prata", "Cormorant Garamond", serif;
+  letter-spacing: 0.08em;
 }
 
 .story-grid {
@@ -836,6 +869,10 @@ body::after {
   .quote-block,
   .footer-panel {
     padding: 2rem;
+  }
+
+  .opening-letter {
+    width: min(70vw, 40rem);
   }
 }
 
