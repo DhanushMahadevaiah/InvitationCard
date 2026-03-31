@@ -576,6 +576,25 @@ body::after {
   text-align: center;
   padding-top: 4.5rem;
   padding-bottom: 2rem;
+  isolation: isolate;
+}
+
+.hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 242, 0.82), rgba(255, 246, 238, 0.9)),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(183, 110, 121, 0.14)),
+    url("./assets/hero-background.jpg") center 22% / cover no-repeat;
+  opacity: 0.42;
+  filter: saturate(0.95) contrast(0.96) brightness(1.04);
+  transform: scale(1.04);
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 .monogram {
@@ -646,6 +665,7 @@ body::after {
   font-size: clamp(3rem, 12vw, 4.8rem);
   line-height: 0.95;
   font-weight: 600;
+  text-shadow: 0 8px 24px rgba(255, 250, 245, 0.55);
 }
 
 .couple-names span {
@@ -659,6 +679,7 @@ body::after {
   margin: 0;
   color: var(--muted);
   font-size: 1rem;
+  text-shadow: 0 4px 18px rgba(255, 251, 247, 0.7);
 }
 
 .date-badge {
