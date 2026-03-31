@@ -1,7 +1,7 @@
 const revealItems = document.querySelectorAll(".reveal");
-const countdownValue = document.querySelector(".countdown-value");
-const soundToggle = document.querySelector(".sound-toggle");
-const shareButton = document.querySelector(".share-button");
+const openingScreen = document.querySelector("#opening-screen");
+const invitationCard = document.querySelector("#invitation-card");
+const openInviteButton = document.querySelector("#open-invite-button");
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -22,36 +22,10 @@ revealItems.forEach((item, index) => {
   revealObserver.observe(item);
 });
 
-const eventDateRaw = countdownValue?.dataset.eventDate;
-const eventDate = eventDateRaw ? new Date(eventDateRaw) : null;
-
-const formatUnit = (value) => String(value).padStart(2, "0");
-
-const updateCountdown = () => {
-  if (!countdownValue || !eventDate) return;
-
-  const diff = eventDate.getTime() - Date.now();
-
-  if (diff <= 0) {
-    countdownValue.textContent = "Celebration Time";
-    return;
-  }
-
-  const totalMinutes = Math.floor(diff / 60000);
-  const days = Math.floor(totalMinutes / (60 * 24));
-  const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
-  const minutes = totalMinutes % 60;
-
-  countdownValue.textContent = `${formatUnit(days)}d ${formatUnit(hours)}h ${formatUnit(minutes)}m`;
-};
-
-updateCountdown();
-window.setInterval(updateCountdown, 60000);
-
 let audioContext;
 let ambientGain;
 let ambientTimer;
-let soundEnabled = false;
+let audioStarted = false;
 
 const notes = [523.25, 659.25, 783.99, 659.25];
 
@@ -99,63 +73,40 @@ const playChime = (timeOffset = 0) => {
 
 const startAmbientLoop = async () => {
   const context = await ensureAudioContext();
-  if (!context || ambientTimer) return;
+  if (!context || ambientTimer) return false;
 
   playChime();
   ambientTimer = window.setInterval(() => {
-    if (!soundEnabled) return;
     playChime();
   }, 12000);
+  return true;
 };
 
-const stopAmbientLoop = () => {
-  if (ambientTimer) {
-    window.clearInterval(ambientTimer);
-    ambientTimer = null;
-  }
-};
+const beginInvitationExperience = async () => {
+  if (audioStarted) return;
+  audioStarted = true;
 
-const setSoundState = async (enabled) => {
-  soundEnabled = enabled;
-  soundToggle?.classList.toggle("is-on", enabled);
-  soundToggle?.setAttribute("aria-pressed", String(enabled));
-  if (soundToggle) {
-    soundToggle.textContent = enabled ? "Music On" : "Music Off";
-  }
-
-  if (!enabled) {
-    stopAmbientLoop();
-    return;
-  }
-
+  openingScreen?.classList.add("is-opening");
   await startAmbientLoop();
+
+  window.setTimeout(() => {
+    openingScreen?.classList.add("is-hidden");
+    invitationCard?.classList.remove("invitation-hidden");
+    invitationCard?.classList.add("invitation-visible");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 1100);
 };
 
-soundToggle?.addEventListener("click", async () => {
-  await setSoundState(!soundEnabled);
-});
+openInviteButton?.addEventListener("click", beginInvitationExperience);
 
-shareButton?.addEventListener("click", async () => {
-  const shareData = {
-    title: document.title,
-    text: "Join Bharath M and Rachana P for their wedding celebration.",
-    url: window.location.href,
-  };
-
-  try {
-    if (navigator.share) {
-      await navigator.share(shareData);
-      return;
+window.addEventListener(
+  "load",
+  async () => {
+    try {
+      await startAmbientLoop();
+    } catch (error) {
+      // Autoplay may be blocked until user interaction.
     }
-
-    if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(window.location.href);
-      shareButton.textContent = "Link Copied";
-      window.setTimeout(() => {
-        shareButton.textContent = "Share Invite";
-      }, 1800);
-    }
-  } catch (error) {
-    shareButton.textContent = "Share Invite";
-  }
-});
+  },
+  { once: true }
+);
