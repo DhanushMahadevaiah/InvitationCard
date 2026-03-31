@@ -116,7 +116,7 @@ window.addEventListener(
 
     window.setTimeout(() => {
       beginInvitationExperience();
-    }, 900);
+    }, 3000);
   },
   { once: true }
 );

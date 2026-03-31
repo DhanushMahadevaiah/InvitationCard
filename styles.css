@@ -630,11 +630,11 @@ body::after {
 
 .date-badge strong {
   font-family: "Prata", "Cormorant Garamond", serif;
-  font-size: 1.56rem;
-  line-height: 1.18;
+  font-size: 1.12rem;
+  line-height: 1.35;
   font-weight: 400;
   color: #8e4a56;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   font-style: normal;
   text-wrap: balance;
 }
@@ -642,7 +642,8 @@ body::after {
 .date-badge span:first-child,
 .date-badge span:last-child {
   font-family: "Prata", "Cormorant Garamond", serif;
-  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
 }
 
 .story-grid {
