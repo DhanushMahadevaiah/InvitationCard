@@ -89,6 +89,7 @@ body::after {
 .opening-screen.is-hidden {
   opacity: 0;
   visibility: hidden;
+  display: none;
 }
 
 .door-opening-scene {
@@ -814,6 +815,12 @@ body::after {
 .petal-4 { left: 67%; animation: petalFall 14s linear infinite 3s; }
 .petal-5 { left: 82%; animation: petalFall 12s linear infinite 4s; }
 .petal-6 { left: 92%; animation: petalFall 9.5s linear infinite 1.5s; }
+.petal-7 { left: 14%; animation: petalFall 10.5s linear infinite 3.6s; }
+.petal-8 { left: 32%; animation: petalFall 12.5s linear infinite 0.8s; }
+.petal-9 { left: 54%; animation: petalFall 11.8s linear infinite 2.7s; }
+.petal-10 { left: 72%; animation: petalFall 13.8s linear infinite 4.4s; }
+.petal-11 { left: 88%; animation: petalFall 10.2s linear infinite 1.9s; }
+.petal-12 { left: 4%; animation: petalFall 14.2s linear infinite 5s; }
 
 .reveal {
   opacity: 0;
