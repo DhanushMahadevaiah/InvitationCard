@@ -37,15 +37,18 @@ const beginInvitationExperience = () => {
         item.classList.add("is-visible");
       }, index * 120);
     });
-  }, 1200);
+  }, 700);
 
   window.setTimeout(() => {
     openingScreen?.classList.add("is-hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 1500);
+
+  window.setTimeout(() => {
     if (openingScreen) {
       openingScreen.setAttribute("hidden", "hidden");
     }
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, 2100);
+  }, 2800);
 };
 
 window.addEventListener(
