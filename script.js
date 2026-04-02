@@ -33,6 +33,7 @@ const startBackgroundMusic = async () => {
   if (!backgroundMusic || musicStarted) return;
 
   backgroundMusic.volume = 0.22;
+  backgroundMusic.muted = false;
 
   try {
     await backgroundMusic.play();
@@ -48,6 +49,10 @@ const startBackgroundMusic = async () => {
   } catch (error) {
     musicStarted = false;
   }
+};
+
+const retryBackgroundMusic = () => {
+  startBackgroundMusic();
 };
 
 const beginInvitationExperience = () => {
@@ -79,6 +84,14 @@ const beginInvitationExperience = () => {
   }, 2800);
 };
 
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    startBackgroundMusic();
+  },
+  { once: true }
+);
+
 window.addEventListener(
   "load",
   () => {
@@ -89,6 +102,14 @@ window.addEventListener(
   },
   { once: true }
 );
+
+backgroundMusic?.addEventListener("canplaythrough", retryBackgroundMusic, { once: true });
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    startBackgroundMusic();
+  }
+});
 
 const setLanguage = (lang) => {
   document.documentElement.lang = lang === "kn" ? "kn" : "en";
