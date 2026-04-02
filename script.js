@@ -4,6 +4,8 @@ const invitationCard = document.querySelector("#invitation-card");
 const langButtons = document.querySelectorAll("[data-lang-toggle]");
 const langContent = document.querySelectorAll("[data-en][data-kn]");
 const translatableNames = document.querySelectorAll("[data-name-en][data-name-kn]");
+const backgroundMusic = document.querySelector("#background-music");
+let musicStarted = false;
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -26,9 +28,24 @@ revealItems.forEach((item, index) => {
 
 let invitationStarted = false;
 
+const startBackgroundMusic = async () => {
+  if (!backgroundMusic || musicStarted) return;
+
+  backgroundMusic.volume = 0.22;
+
+  try {
+    await backgroundMusic.play();
+    musicStarted = true;
+  } catch (error) {
+    musicStarted = false;
+  }
+};
+
 const beginInvitationExperience = () => {
   if (invitationStarted) return;
   invitationStarted = true;
+
+  startBackgroundMusic();
 
   openingScreen?.classList.add("is-opening");
 
@@ -56,12 +73,21 @@ const beginInvitationExperience = () => {
 window.addEventListener(
   "load",
   () => {
+    startBackgroundMusic();
     window.setTimeout(() => {
       beginInvitationExperience();
     }, 3000);
   },
   { once: true }
 );
+
+const unlockMusic = () => {
+  startBackgroundMusic();
+};
+
+window.addEventListener("pointerdown", unlockMusic, { once: true });
+window.addEventListener("touchstart", unlockMusic, { once: true });
+window.addEventListener("keydown", unlockMusic, { once: true });
 
 const setLanguage = (lang) => {
   document.documentElement.lang = lang === "kn" ? "kn" : "en";
