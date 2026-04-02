@@ -3,6 +3,7 @@ const openingScreen = document.querySelector("#opening-screen");
 const invitationCard = document.querySelector("#invitation-card");
 const langButtons = document.querySelectorAll("[data-lang-toggle]");
 const langContent = document.querySelectorAll("[data-en][data-kn]");
+const translatableNames = document.querySelectorAll("[data-name-en][data-name-kn]");
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -70,6 +71,12 @@ const setLanguage = (lang) => {
     const text = node.dataset[lang];
     if (!text) return;
     node.textContent = text;
+  });
+
+  translatableNames.forEach((node) => {
+    const text = node.dataset[`name${lang === "kn" ? "Kn" : "En"}`];
+    if (!text) return;
+    node.innerHTML = text;
   });
 
   langButtons.forEach((button) => {

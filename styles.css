@@ -906,10 +906,10 @@ body::after {
 }
 
 .quote-block p {
-  margin: 0;
-  font-family: "Cormorant Garamond", serif;
-  font-size: clamp(1.8rem, 7vw, 2.5rem);
-  line-height: 1.15;
+    margin: 0;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.4rem, 7vw, 1.0rem);
+    line-height: 1.75;
 }
 
 .footer-panel {
@@ -1032,7 +1032,7 @@ body::after {
 
 @media (min-width: 720px) {
   .page-shell {
-    padding: 2rem;
+    padding: 0.5rem;
   }
 
   .invitation-card {
