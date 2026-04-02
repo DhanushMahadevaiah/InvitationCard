@@ -6,6 +6,7 @@ const langContent = document.querySelectorAll("[data-en][data-kn]");
 const translatableNames = document.querySelectorAll("[data-name-en][data-name-kn]");
 const backgroundMusic = document.querySelector("#background-music");
 let musicStarted = false;
+let musicStopTimer;
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -36,6 +37,14 @@ const startBackgroundMusic = async () => {
   try {
     await backgroundMusic.play();
     musicStarted = true;
+    if (musicStopTimer) {
+      window.clearTimeout(musicStopTimer);
+    }
+    musicStopTimer = window.setTimeout(() => {
+      backgroundMusic.pause();
+      backgroundMusic.currentTime = 0;
+      musicStarted = false;
+    }, 120000);
   } catch (error) {
     musicStarted = false;
   }
@@ -80,14 +89,6 @@ window.addEventListener(
   },
   { once: true }
 );
-
-const unlockMusic = () => {
-  startBackgroundMusic();
-};
-
-window.addEventListener("pointerdown", unlockMusic, { once: true });
-window.addEventListener("touchstart", unlockMusic, { once: true });
-window.addEventListener("keydown", unlockMusic, { once: true });
 
 const setLanguage = (lang) => {
   document.documentElement.lang = lang === "kn" ? "kn" : "en";
