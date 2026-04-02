@@ -218,6 +218,7 @@ body::after {
   transition: transform 1000ms cubic-bezier(0.22, 0.8, 0.2, 1), opacity 1000ms ease;
   opacity: 0.88;
   will-change: transform, opacity;
+  animation: openingCardFloat 2.8s ease-in-out infinite;
 }
 
 .opening-photo-frame {
@@ -231,6 +232,8 @@ body::after {
     linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(242, 217, 201, 0.88));
   border: 1px solid rgba(197, 155, 79, 0.22);
   box-shadow: 0 20px 40px rgba(122, 63, 72, 0.14);
+  overflow: hidden;
+  animation: photoRevealPulse 2.4s ease-in-out infinite;
 }
 
 .opening-photo-frame::before {
@@ -239,6 +242,18 @@ body::after {
   inset: -0.55rem;
   border-radius: 1.95rem;
   border: 1px solid rgba(197, 155, 79, 0.16);
+}
+
+.opening-photo-frame::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -35%;
+  width: 40%;
+  transform: rotate(12deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.52), transparent);
+  animation: coverShine 2.8s ease-in-out infinite;
 }
 
 .opening-photo {
@@ -289,6 +304,32 @@ body::after {
   text-wrap: balance;
 }
 
+.bubble-loader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 0.45rem;
+  min-height: 1.5rem;
+}
+
+.bubble {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d8928d, #b76e79);
+  box-shadow: 0 6px 14px rgba(183, 110, 121, 0.22);
+  animation: bubblePulse 1.2s ease-in-out infinite;
+}
+
+.bubble-2 {
+  animation-delay: 0.18s;
+}
+
+.bubble-3 {
+  animation-delay: 0.36s;
+}
+
 .opening-screen.is-opening .door-left {
   transform: rotateY(-82deg);
 }
@@ -298,8 +339,9 @@ body::after {
 }
 
 .opening-screen.is-opening .opening-letter {
-  transform: translate(-50%, -50%) scale(1.015);
-  opacity: 0.98;
+  transform: translate(-50%, -50%) scale(1.035);
+  opacity: 1;
+  animation: none;
 }
 
 .background-ornaments {
@@ -573,7 +615,7 @@ body::after {
   width: min(100%, 30rem);
   margin: 0 auto;
   padding: 1rem;
-  transition: opacity 900ms ease, transform 900ms ease, filter 900ms ease;
+  transition: opacity 1400ms cubic-bezier(0.22, 0.8, 0.2, 1), transform 1400ms cubic-bezier(0.22, 0.8, 0.2, 1), filter 1400ms ease;
   will-change: opacity, transform;
 }
 
@@ -604,8 +646,8 @@ body::after {
 
 .invitation-hidden {
   opacity: 0;
-  transform: translateY(18px) scale(0.99);
-  filter: blur(4px);
+  transform: translateY(38px) scale(0.965);
+  filter: blur(8px);
   pointer-events: none;
 }
 
@@ -670,6 +712,7 @@ body::after {
   gap: 0.6rem;
   min-width: 4.5rem;
   margin-bottom: 1rem;
+  margin-top: 15px;
   padding: 0.85rem 1.05rem;
   border-radius: 999px;
   border: 1px solid rgba(197, 155, 79, 0.3);
@@ -726,7 +769,7 @@ body::after {
 }
 
 .couple-names {
-  margin: 0.85rem 0;
+  margin: 0.5rem 0;
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(3rem, 12vw, 4.8rem);
   line-height: 0.95;
@@ -1027,6 +1070,53 @@ body::after {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes openingCardFloat {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  50% {
+    transform: translate(-50%, -51.4%) scale(0.935);
+  }
+}
+
+@keyframes photoRevealPulse {
+  0%, 100% {
+    box-shadow: 0 20px 40px rgba(122, 63, 72, 0.14);
+  }
+  50% {
+    box-shadow: 0 26px 52px rgba(122, 63, 72, 0.22);
+  }
+}
+
+@keyframes coverShine {
+  0% {
+    left: -45%;
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.75;
+  }
+  55% {
+    left: 115%;
+    opacity: 0;
+  }
+  100% {
+    left: 115%;
+    opacity: 0;
+  }
+}
+
+@keyframes bubblePulse {
+  0%, 100% {
+    transform: translateY(0) scale(0.88);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(-4px) scale(1.08);
+    opacity: 1;
   }
 }
 

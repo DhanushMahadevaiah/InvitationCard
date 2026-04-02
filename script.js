@@ -26,6 +26,27 @@ revealItems.forEach((item, index) => {
 
 let invitationStarted = false;
 
+const animateSlowScroll = (targetY, duration = 3200) => {
+  const startY = window.scrollY;
+  const distance = targetY - startY;
+  const startTime = performance.now();
+
+  const easeInOutCubic = (t) =>
+    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  const frame = (now) => {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeInOutCubic(progress);
+    window.scrollTo(0, startY + distance * eased);
+    if (progress < 1) {
+      window.requestAnimationFrame(frame);
+    }
+  };
+
+  window.requestAnimationFrame(frame);
+};
+
 const beginInvitationExperience = () => {
   if (invitationStarted) return;
   invitationStarted = true;
@@ -44,7 +65,7 @@ const beginInvitationExperience = () => {
 
   window.setTimeout(() => {
     openingScreen?.classList.add("is-hidden");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    animateSlowScroll(Math.min(260, invitationCard?.offsetTop ?? 0), 3600);
   }, 1500);
 
   window.setTimeout(() => {
