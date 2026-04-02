@@ -1,6 +1,8 @@
 const revealItems = document.querySelectorAll(".reveal");
 const openingScreen = document.querySelector("#opening-screen");
 const invitationCard = document.querySelector("#invitation-card");
+const langButtons = document.querySelectorAll("[data-lang-toggle]");
+const langContent = document.querySelectorAll("[data-en][data-kn]");
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -60,3 +62,23 @@ window.addEventListener(
   },
   { once: true }
 );
+
+const setLanguage = (lang) => {
+  document.documentElement.lang = lang === "kn" ? "kn" : "en";
+
+  langContent.forEach((node) => {
+    const text = node.dataset[lang];
+    if (!text) return;
+    node.textContent = text;
+  });
+
+  langButtons.forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.langToggle === lang);
+  });
+};
+
+langButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setLanguage(button.dataset.langToggle || "en");
+  });
+});

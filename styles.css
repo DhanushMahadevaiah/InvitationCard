@@ -577,6 +577,31 @@ body::after {
   will-change: opacity, transform;
 }
 
+.language-switch {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.lang-button {
+  appearance: none;
+  border: 1px solid rgba(197, 155, 79, 0.24);
+  background: rgba(255, 250, 245, 0.88);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  box-shadow: 0 10px 24px rgba(122, 63, 72, 0.08);
+}
+
+.lang-button.is-active {
+  background: linear-gradient(135deg, #c46c6a, #9d4b5d);
+  color: #fffaf7;
+}
+
 .invitation-hidden {
   opacity: 0;
   transform: translateY(18px) scale(0.99);
@@ -747,6 +772,22 @@ body::after {
     letter-spacing: 0.01em;
     font-style: normal;
     text-wrap: balance;
+}
+
+.parents-panel {
+  margin-top: 1rem;
+  padding: 0.95rem 1.1rem;
+  border-radius: 1.25rem;
+  background: rgba(255, 249, 244, 0.76);
+  border: 1px solid rgba(197, 155, 79, 0.18);
+}
+
+.parents-copy {
+  margin: 0.35rem 0 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #7c4151;
 }
 
 .date-badge span:first-child,
